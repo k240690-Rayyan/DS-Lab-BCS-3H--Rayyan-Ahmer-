@@ -1,0 +1,53 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int row, cols;
+    int pos;
+    int fill = 1;
+
+    cout << "Enter the number of rows and columns for the array:" << endl;
+    cin >> row >> cols;
+    
+    int **arr = new int*[row];
+    
+    for (int i=0; i<row; i++) {
+        arr[i] = new int[cols];
+    }
+    
+    for (int i=0; i<row; i++) {
+        for (int j=0; j<cols; j++) {
+            arr[i][j] = 0;
+        }
+    }
+    
+    for (int i=0; i<row; i++) {
+        for (int j=0; j<cols; j++) {
+            cout << "Enter the seat no. to fill (row " << i << "):" << endl;
+            cin >> pos;
+
+            if (pos >= 0 && pos < cols) {
+                arr[i][pos] = fill;
+            } 
+            else {
+                cout << "Invalid input" << endl;
+            }
+        }
+    } 
+    
+    cout << "Final seating form:" << endl;
+    for (int i=0; i<row; i++) {
+        for (int j=0; j<cols; j++) {
+            cout << "[" << arr[i][j] << "]";
+        }
+        cout << endl;
+    }
+    
+    for (int i=0; i<row; i++) {
+        delete[] arr[i];
+    }
+    
+    delete[] arr;
+    
+    return 0;
+} 
