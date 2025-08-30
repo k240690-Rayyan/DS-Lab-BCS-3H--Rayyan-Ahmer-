@@ -1,0 +1,81 @@
+#include <iostream>
+using namespace std;
+
+int* resizeArray(int* o_array, int& osize, int nsize) {
+    
+    if (nsize == osize) {
+        return o_array;
+    }
+    
+    int* n_array = new int[nsize]{0};
+    
+    int limit = (osize < nsize) ? osize : nsize;
+    
+    for (int i = 0; i < limit; i++) {
+        n_array[i] = o_array[i];
+    }
+    
+    delete[] o_array;
+    osize = nsize;  
+    return n_array;
+}
+
+double totalE(int* aRR, int mnths) {
+    double total = 0;
+    for (int i = 0; i < mnths; i++) {
+        total += aRR[i];
+    }
+    return total;
+}
+
+double avgE(int* aRR, int mnths) {
+    if (mnths == 0) return 0;  
+    int total = 0;
+    for (int i = 0; i < mnths; i++) {
+        total += aRR[i];
+    }
+    return static_cast<double>(total) / mnths;  
+}
+
+int main() {
+    int n = 3;
+    
+    int* expenses = new int[n]{25, 30, 40};
+    
+    cout << "Earlier monthly expenses:" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << "Month " << i+1 << ": $" << expenses[i] << endl;
+    }
+    
+    int more;
+    cout << "How many months do you want to track now? ";
+    cin >> more;
+    
+    // Input validation
+    while (more <= 0) {
+        cout << "Please enter a positive number: ";
+        cin >> more;
+    }
+    int old_n = n;
+    expenses = resizeArray(expenses, n, more);
+    
+    if (more > old_n) {
+        cout << "Enter expenses for the additional " << (more - old_n) << " months:" << endl;
+        for (int i = old_n; i < more; i++) {
+            cout << "Month " << i+1 << ": $";
+            cin >> expenses[i];
+        }
+    }
+
+    
+    cout << "\nAll monthly expenses:" << endl;
+    for (int i = 0; i < more; i++) {
+        cout << "Month " << i+1 << ": $" << expenses[i] << endl;
+    }
+    
+    cout << "\nTotal expenses of " << more << " months: $" << totalE(expenses, more) << endl;
+    cout << "Average expenses of " << more << " months: $" << avgE(expenses, more) << endl;
+    
+    delete[] expenses;
+    return 0;
+}
