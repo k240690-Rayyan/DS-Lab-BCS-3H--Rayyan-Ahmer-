@@ -1,0 +1,39 @@
+#include <iostream>
+using namespace std;
+
+double avg(int* marks, int courses) {
+    double total = 0;
+    for (int j = 0; j < courses; j++) {
+        total += marks[j];
+    }
+    return total / courses;
+}
+
+int main() {
+    int rows = 5;
+    int **students = new int*[rows];
+    int courses[rows];
+    
+    for (int i = 0; i < rows; i++) {
+        cout << "Enter the number of courses for student " << i + 1 << ": ";
+        cin >> courses[i];
+        students[i] = new int[courses[i]];
+    }
+    
+    for (int i = 0; i < rows; i++) {
+        cout << "\nEnter marks for student " << i + 1 << ":\n";
+        for (int j = 0; j < courses[i]; j++) {
+            cout << "  Course " << j + 1 << ": ";
+            cin >> students[i][j];
+        }
+        cout << "Average marks for student " << i + 1 << ": "
+             << avg(students[i], courses[i]) << endl;
+    }
+
+    for (int i = 0; i < rows; i++) {
+        delete[] students[i];
+    }
+    delete[] students;
+    
+    return 0;
+}
