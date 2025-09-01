@@ -1,0 +1,55 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int days, readings;
+    cout << "Enter days: ";
+    cin >> days;
+    cout << "Enter readings per day: ";
+    cin >> readings;
+
+    float** arr = new float*[days];
+    for (int i = 0; i < days; i++) {
+        arr[i] = new float[readings];
+    }
+
+    cout << "\nEnter temperatures\n";
+    for (int i = 0; i < days; i++) {
+        cout << "Day " << i + 1 << ":\n";
+        for (int j = 0; j < readings; j++) {
+            cout << "Reading " << j + 1 << ": ";
+            cin >> arr[i][j];
+        }
+    }
+
+    float* avg = new float[days];
+    for (int i = 0; i < days; i++) {
+        float sum = 0;
+        for (int j = 0; j < readings; j++) {
+            sum += arr[i][j];
+        }
+        avg[i] = sum / readings;
+    }
+
+    int hot = 0, cold = 0;
+    for (int i = 1; i < days; i++) {
+        if (avg[i] > avg[hot]) hot = i;
+        if (avg[i] < avg[cold]) cold = i;
+    }
+
+    cout << "\nAverages\n";
+    for (int i = 0; i < days; i++) {
+        cout << "Day " << i + 1 << ": " << avg[i] << endl;
+    }
+
+    cout << "\nHottest: Day " << hot + 1 << " (" << avg[hot] << ")\n";
+    cout << "Coldest: Day " << cold + 1 << " (" << avg[cold] << ")\n";
+
+    for (int i = 0; i < days; i++) {
+        delete[] arr[i];
+    }
+    delete[] arr;
+    delete[] avg;
+
+    return 0;
+}
