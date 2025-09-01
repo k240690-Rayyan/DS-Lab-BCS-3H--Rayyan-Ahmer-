@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    
+    int dept = 4;
+    int **Depts = new int*[dept];
+    int emp[dept];
+    
+    for (int i=0; i<dept; i++) {
+        cout << "Enter the number of employees for dept no." << i + 1 << ":" << endl;
+        cin >> emp[i];
+        Depts[i] = new int (emp[i]);
+    }
+    for (int i=0; i<dept; i++) {
+        cout << "Enter the salary for employees in dept." << i + 1 << ":" << endl;
+        for (int j=0; j < emp[i]; j++) {
+            cin >> Depts[i][j];
+            
+        }
+        cout << endl;
+    }
+    
+    double maxAvgSalary = -1.0;
+    int bestDept = -1;
+
+    for (int i = 0; i < dept; i++) {
+        int highestSalary = 0;
+        double totalSalary = 0.0;
+        
+        for (int j = 0; j < emp[i]; j++) {
+            int currentSalary = Depts[i][j];
+            totalSalary += currentSalary;
+            if (currentSalary > highestSalary) {
+                highestSalary = currentSalary;
+            }
+        }
+        
+        double currentAvg = 0.0;
+        if (emp[i] > 0) {
+            currentAvg = totalSalary / emp[i];
+        }
+
+        cout << "Department " << i + 1 << ":" << endl;
+        cout << "  Highest Salary: $" << highestSalary << endl;
+        cout << "  Average Salary: $" << (currentAvg) << endl;
+
+        if (currentAvg > maxAvgSalary) {
+            maxAvgSalary = currentAvg;
+            bestDept = i + 1;
+        }
+    }
+    
+    cout << "\nResults" << endl;
+    if (bestDept != -1) {
+        cout << "The department with the overall highest average salary is Dept. " << bestDept << endl;
+    } else {
+        cout << "No departments were entered" << endl;
+    }
+
+    // Deallocate all dynamically allocated memory
+    for (int i = 0; i < dept; i++) {
+        delete[] Depts[i];
+    }
+    delete[] Depts;
+    
+
+    return 0;
+}
+    
+    
