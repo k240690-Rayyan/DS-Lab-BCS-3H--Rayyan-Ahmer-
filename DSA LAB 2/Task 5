@@ -1,0 +1,74 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int r, c;
+    cout << "Enter rows: ";
+    cin >> r;
+    cout << "Enter cols: ";
+    cin >> c;
+
+    int** a = new int*[r];
+    int** b = new int*[r];
+    for (int i = 0; i < r; i++) {
+        a[i] = new int[c];
+        b[i] = new int[c];
+    }
+
+    cout << "\nEnter values for A:\n";
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            cin >> a[i][j];
+        }
+    }
+
+    cout << "\nEnter values for B:\n";
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            cin >> b[i][j];
+        }
+    }
+
+    int** add = new int*[r];
+    int** sub = new int*[r];
+    for (int i = 0; i < r; i++) {
+        add[i] = new int[c];
+        sub[i] = new int[c];
+    }
+
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            add[i][j] = a[i][j] + b[i][j];
+            sub[i][j] = a[i][j] - b[i][j];
+        }
+    }
+
+    cout << "\nAddition:\n";
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            cout << add[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    cout << "\nSubtraction:\n";
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            cout << sub[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+    for (int i = 0; i < r; i++) {
+        delete[] a[i];
+        delete[] b[i];
+        delete[] add[i];
+        delete[] sub[i];
+    }
+    delete[] a;
+    delete[] b;
+    delete[] add;
+    delete[] sub;
+
+    return 0;
+}
